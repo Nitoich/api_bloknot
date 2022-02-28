@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Dotenv\Util\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,8 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'login',
+        'first_name',
+        'last_name',
         'password',
     ];
 
@@ -32,6 +34,16 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function generateToken() {
+        $this->api_token = \Illuminate\Support\Str::random();
+        $this->save();
+        return $this->api_token;
+    }
+
+    public function records() {
+        return $this->hasMany(Record::class, 'user_id', 'id');
+    }
 
     /**
      * The attributes that should be cast.
