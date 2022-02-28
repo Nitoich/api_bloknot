@@ -20,3 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', 'App\Http\Controllers\UserController@register');
 Route::post('/login', 'App\Http\Controllers\UserController@login');
+
+Route::middleware('auth:api')->get('/record', 'App\Http\Controllers\RecordController@getRecords');
+Route::middleware('auth:api')->post('/record', 'App\Http\Controllers\RecordController@addRecord');
+
+Route::middleware('auth:api')->get('/record/{record_id}', 'App\Http\Controllers\RecordController@getRecord');
+Route::middleware('auth:api')->delete('/record/{record_id}', 'App\Http\Controllers\RecordController@deleteRecord');
+
